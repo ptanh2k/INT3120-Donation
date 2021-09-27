@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Donation 1.0</string>
+    <string name="user_name">Name</string>
+    <string name="login_btn">Login</string>
+    <string name="welcome">Welcome</string>
+    <string name="donateSubtitle">Please Give Generously</string>
+    <string name="donateButton">Donate</string>
+    <string name="paypal">PayPal</string>
+    <string name="direct">Direct</string>
+</resources>
