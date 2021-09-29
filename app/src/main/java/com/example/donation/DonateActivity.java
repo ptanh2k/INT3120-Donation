@@ -1,17 +1,21 @@
 package com.example.donation;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class DonateActivity extends AppCompatActivity {
     TextView textView;
@@ -19,8 +23,10 @@ public class DonateActivity extends AppCompatActivity {
     RadioGroup paymentMethod;
     NumberPicker amountPicker;
     ProgressBar progressBar;
+    EditText amountText;
 
     private int totalDonated = 0;
+    private boolean targetAchieved = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +57,24 @@ public class DonateActivity extends AppCompatActivity {
                 donateButtonPressed();
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_donate, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menuReport:
+                Toast toast = Toast.makeText(this, "Report Selected", Toast.LENGTH_SHORT);
+                toast.show();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public void donateButtonPressed() {
