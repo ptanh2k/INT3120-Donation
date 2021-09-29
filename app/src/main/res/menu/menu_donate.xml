@@ -10,4 +10,9 @@
         android:orderInCategory="100"
         android:title="@string/menuReport"
         app:showAsAction="never"/>
+
+    <item android:id="@+id/donateNav"
+        android:orderInCategory="100"
+        android:title="@string/donateNav"
+        app:showAsAction="never" />
 </menu>

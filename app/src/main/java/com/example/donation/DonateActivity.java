@@ -17,16 +17,16 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class DonateActivity extends AppCompatActivity {
+import models.Donation;
+
+public class DonateActivity extends Base {
     TextView textView;
     Button donateButton;
     RadioGroup paymentMethod;
     NumberPicker amountPicker;
     ProgressBar progressBar;
     EditText amountText;
-
-    private int totalDonated = 0;
-    private boolean targetAchieved = false;
+    TextView amountTotal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,14 +39,13 @@ public class DonateActivity extends AppCompatActivity {
 
         paymentMethod = (RadioGroup) findViewById(R.id.paymentMethod);
         amountPicker = (NumberPicker) findViewById(R.id.amountPicker);
+        amountTotal = (TextView) findViewById(R.id.totalSoFar);
 
         amountPicker.setMinValue(0);
         amountPicker.setMaxValue(1000);
+        amountTotal.setText("$0");
 
         donateButton = (Button) findViewById(R.id.donateButton);
-        if (donateButton != null) {
-            Log.v("Donate", "Really got the donate button");
-        }
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.setMax(10000);
@@ -61,6 +60,7 @@ public class DonateActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_donate, menu);
         return true;
     }
@@ -69,22 +69,29 @@ public class DonateActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menuReport:
-                Toast toast = Toast.makeText(this, "Report Selected", Toast.LENGTH_SHORT);
-                toast.show();
+                Intent intent = new Intent(this, Report.class);
+                startActivity(intent);
                 break;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     public void donateButtonPressed() {
-        int amount = amountPicker.getValue();
+        int donatedAmount = amountPicker.getValue();
         int radioId = paymentMethod.getCheckedRadioButtonId();
         String method = radioId == R.id.PayPal ? "PayPal" : "Direct";
-        totalDonated = totalDonated + amount;
-        progressBar.setProgress(totalDonated);
-        Log.v("Donate", "Donate Button Pressed with amount " + amount);
-        Log.v("Donate", "Using method: " + method);
-        Log.v("Donate", "Current total: " + totalDonated);
+       if (donatedAmount == 0) {
+           String text = amountText.getText().toString();
+           if (!text.equals("")) {
+               donatedAmount = Integer.parseInt(text);
+           }
+       }
+       if (donatedAmount > 0) {
+           newDonation(new Donation(donatedAmount, method));
+           progressBar.setProgress(totalDonated);
+           String totalDonatedStr = "$" + totalDonated;
+           amountTotal.setText(totalDonatedStr);
+       }
+
     }
 }
