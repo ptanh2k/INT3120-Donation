@@ -1,13 +1,8 @@
 package com.example.donation;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,12 +10,11 @@ import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import models.Donation;
 
 public class DonateActivity extends Base {
-    TextView textView;
+    TextView welcomeText;
     Button donateButton;
     RadioGroup paymentMethod;
     NumberPicker amountPicker;
@@ -34,8 +28,9 @@ public class DonateActivity extends Base {
         setContentView(R.layout.activity_donate);
         Intent intent = getIntent();
         String name = intent.getStringExtra("Name");
-        textView = (TextView) findViewById(R.id.welcome);
-        textView.setText(String.format("Welcome, %s", name));
+        welcomeText = (TextView) findViewById(R.id.welcome);
+        welcomeText.setTypeface(null, Typeface.BOLD);
+        welcomeText.setText(String.format("Welcome, %s", name));
 
         paymentMethod = (RadioGroup) findViewById(R.id.paymentMethod);
         amountPicker = (NumberPicker) findViewById(R.id.amountPicker);
@@ -56,24 +51,6 @@ public class DonateActivity extends Base {
                 donateButtonPressed();
             }
         });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_donate, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menuReport:
-                Intent intent = new Intent(this, Report.class);
-                startActivity(intent);
-                break;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     public void donateButtonPressed() {
