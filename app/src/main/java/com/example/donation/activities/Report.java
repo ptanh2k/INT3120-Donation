@@ -1,12 +1,12 @@
-package com.example.donation;
-
+package com.example.donation.activities;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import adapters.DonationAdapter;
+import com.example.donation.R;
+import com.example.donation.adapters.DonationAdapter;
 
 public class Report extends Base {
     ListView listView;
@@ -24,7 +24,7 @@ public class Report extends Base {
 
         //The Adapter acts as a bridge between the UI Component and the Data Source. It converts data from the data sources into view items that can be displayed into the UI Component.
         //Data Source can be Arrays, HashMap, Database, etc. and UI Components can be ListView, GridView, Spinner, etc
-        DonationAdapter adapter = new DonationAdapter(this, donations);
+        DonationAdapter adapter = new DonationAdapter(this, app.dbManager.getAll());
         listView.setAdapter(adapter);
     }
 }

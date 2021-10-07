@@ -1,9 +1,9 @@
-package com.example.donation;
+package com.example.donation.activities;
 
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.view.View;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
@@ -11,7 +11,8 @@ import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import models.Donation;
+import com.example.donation.R;
+import com.example.donation.models.Donation;
 
 public class DonateActivity extends Base {
     TextView welcomeText;
@@ -45,12 +46,7 @@ public class DonateActivity extends Base {
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.setMax(10000);
 
-        donateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                donateButtonPressed();
-            }
-        });
+        donateButton.setOnClickListener(view -> donateButtonPressed());
     }
 
     public void donateButtonPressed() {
@@ -64,11 +60,18 @@ public class DonateActivity extends Base {
            }
        }
        if (donatedAmount > 0) {
-           newDonation(new Donation(donatedAmount, method));
-           progressBar.setProgress(totalDonated);
-           String totalDonatedStr = "$" + totalDonated;
+           app.newDonation(new Donation(donatedAmount, method));
+           progressBar.setProgress(app.totalDonated);
+           String totalDonatedStr = "$" + app.totalDonated;
            amountTotal.setText(totalDonatedStr);
        }
+    }
 
+    @Override
+    public void reset(MenuItem item) {
+        app.dbManager.reset();
+        app.totalDonated = 0;
+        String totalDonatedStr = "$" + app.totalDonated;
+        amountTotal.setText(totalDonatedStr);
     }
 }

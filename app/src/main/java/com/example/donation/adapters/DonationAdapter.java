@@ -1,4 +1,4 @@
-package adapters;
+package com.example.donation.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,7 +14,7 @@ import com.example.donation.R;
 
 import java.util.List;
 
-import models.Donation;
+import com.example.donation.models.Donation;
 
 public class DonationAdapter extends ArrayAdapter<Donation> {
     private final Context context;
